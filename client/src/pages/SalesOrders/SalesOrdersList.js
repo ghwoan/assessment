@@ -19,12 +19,15 @@ export default {
       };
    },
    mounted() {
+      this.getHistoryFilters();
       this.fetchData();
-      this.timer = setInterval(this.fetchData, 5 * 1000);
+     // this.timer = setInterval(this.fetchData, 5 * 1000);
    },
+   
    destroy() {
       if(this.timer){
-         clearInterval(this.timer);
+         //clearInterval(this.timer);
+         clearTimeout(this.timer);
       }
    },
    /*watch: {
@@ -33,20 +36,49 @@ export default {
       }
    },*/
    methods: {
+      //to fetch the server sales orders data
       fetchData: function() {
-        // console.log("fetchData");
-      //   http.get(`orders`)
-      getSalesOrders(this.filters).then(response => {
-               this.orders = response.data.data;
-            })
+         getSalesOrders(this.filters).then(response => {
+            this.orders = response.data.data;
+            this.setNextFetch();
+         })
             .catch(e => {
                console.log(e);
-            })
+               this.setNextFetch();
+            });
       },
+      //set the next timer to fetch data
+      setNextFetch: function () {
+         if (this.timer) {
+            clearTimeout(this.timer);
+         }
+         this.timer = setTimeout(this.fetchData, 5 * 1000);
+      },
+      //get the filter history
+      getHistoryFilters() {
+         if (!sessionStorage) return;
+         try {
+            let filters = sessionStorage.getItem("sales-order-filter");
+            if (filters) {
+               this.filters = JSON.parse(filters);
+            }  
+         } catch (er) {
+            console.log(er); 
+         }
+      },
+      //save the filters to session
+      saveFilters() {
+         if (sessionStorage && this.filters) {
+            sessionStorage.setItem("sales-order-filter",JSON.stringify(this.filters));
+         }
+      },
+      //handle filter changes
       onApplyFilter: function (filters) {
          console.log("onApplyFilters");
          this.filters = filters;
          this.showModal = false;
+         this.fetchData();
+         this.saveFilters();
       }
    }
    
