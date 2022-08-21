@@ -1,6 +1,9 @@
+/**
+ * This is a sets of methods to fetch data via API
+ */
 import { http } from '../utils/http.js';
 
-
+//get country list from server
 export function getCountryList() {
    try {
       return http.get(`/orders/countries`);
@@ -9,7 +12,7 @@ export function getCountryList() {
    }
 }
 
-
+//get customer list
 export function getCustomerList() {
    try {
       return http.get(`/orders/customers`);
@@ -18,7 +21,7 @@ export function getCustomerList() {
    }
 }
 
-
+//get sales orders
 export async function getSalesOrders(filters) {
    let param = {
       ...filters,
@@ -29,17 +32,4 @@ export async function getSalesOrders(filters) {
    } catch (er) {
       console.log(er);
    }
-/*
-   http.post(`/orders/filter`, param)
-      .then(response => {
-         if (response && response.data) {
-            return response.data.data;
-         } else {
-            return [];
-         }
-      })
-      .catch(e => {
-         console.log(e);
-      return [];   
-   })*/
 }

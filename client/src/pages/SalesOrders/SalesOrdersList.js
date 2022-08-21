@@ -21,23 +21,16 @@ export default {
    mounted() {
       this.getHistoryFilters();
       this.fetchData();
-     // this.timer = setInterval(this.fetchData, 5 * 1000);
    },
-   
    destroy() {
       if(this.timer){
-         //clearInterval(this.timer);
          clearTimeout(this.timer);
       }
    },
-   /*watch: {
-      orders: (value) => {
-         console.log(value);
-      }
-   },*/
    methods: {
       //to fetch the server sales orders data
-      fetchData: function() {
+      fetchData: function () {
+         console.log("fetchData");
          getSalesOrders(this.filters).then(response => {
             this.orders = response.data.data;
             this.setNextFetch();
@@ -52,7 +45,7 @@ export default {
          if (this.timer) {
             clearTimeout(this.timer);
          }
-         this.timer = setTimeout(this.fetchData, 5 * 1000);
+         this.timer = setTimeout(this.fetchData, 60 * 1000);
       },
       //get the filter history
       getHistoryFilters() {
@@ -74,7 +67,6 @@ export default {
       },
       //handle filter changes
       onApplyFilter: function (filters) {
-         console.log("onApplyFilters");
          this.filters = filters;
          this.showModal = false;
          this.fetchData();

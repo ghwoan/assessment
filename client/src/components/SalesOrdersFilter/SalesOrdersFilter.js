@@ -46,12 +46,6 @@ export default {
    destroy() {
 
    },
-   watch: {
-      filters: (value) => {
-         console.log(value);
-      }
-   },
-
    methods: {
       init: function () {
          let def = this.initFilters;
@@ -131,7 +125,6 @@ export default {
                   }
                });
             }
-            console.log(this.categoryState);
             if (this.categoryState.find(c => c===false)!=undefined) {
                this.categoryState[0] = false;
             }
@@ -140,11 +133,10 @@ export default {
             this.categoryState = a;
          }
       },
+      //check if there is any changes on the filters selection
       hasChanges: function () {
          let newFilters = this.getNewFilters();
          if (newFilters && this.filters) {
-            console.log(JSON.stringify(newFilters));
-            console.log(JSON.stringify(this.initFilters));
             if (JSON.stringify(newFilters) == JSON.stringify(this.initFilters)) {
                return false;
             } else {

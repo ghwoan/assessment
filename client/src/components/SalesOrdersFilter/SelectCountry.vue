@@ -32,6 +32,7 @@ export default {
       }
    },
    methods:{
+      //fetch country list from the server
       fetchCountryList: function() {
          getCountryList()
             .then(response => {
@@ -44,8 +45,8 @@ export default {
                console.log(e); 
          })
       },
+      //handle on country selection change
       onChange: function(event){
-         console.log("conSelectCountry change");
          this.$emit("valueChange", event.target.value);
       }
    }

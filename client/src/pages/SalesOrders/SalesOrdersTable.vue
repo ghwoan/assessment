@@ -2,15 +2,25 @@
 <div class="table-container">
   <div class="tcolumn thead">
         <div class="th">Order No</div>
-        <div class="th">Customer Name</div>
-        <div class="th">Status</div>
-        <div class="th">Category</div>
-        <div class="th">Country</div>
-        <div class="th">Created Date</div>
+        <div class="th" @click="sortBy('customer_name')" >Customer Name 
+           <span class="arrow" :class="sortOrder.customer_name" ></span>
+        </div>
+        <div class="th" @click="sortBy('status')">Status 
+           <span class="arrow" :class="sortOrder.status" ></span>
+        </div>
+        <div class="th" @click="sortBy('category')">Category 
+           <span class="arrow" :class="sortOrder.category" ></span>
+        </div>
+        <div class="th" @click="sortBy('country')">Country 
+           <span class="arrow" :class="sortOrder.country" ></span>
+        </div>
+        <div class="th" @click="sortBy('created_date')">Created Date 
+           <span class="arrow" :class="sortOrder.created_date" ></span>
+        </div>
   </div>
 
     <div v-if="orders && orders.length">    
-      <div v-for="(order,index) in orders" :key="index" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
+      <div v-for="(order,index) in sortedData" :key="index" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
         <div  class="tcell left">{{index +1}}</div>
         <div class="tcell left">{{order.customer_name}}</div>
         <div class="tcell left">{{order.status}}</div>
@@ -35,7 +45,9 @@ export default {
   },
   data() {
       return {
-         orders: []
+         orders: [],
+         sortField: '',
+         sortOrder: {customer_name:"asc", status:"asc", category: "asc", country:"asc", created_date: "asc"} 
       };
    },
   watch: {
@@ -44,7 +56,22 @@ export default {
          this.orders = value;
       },
   },
+  computed: {
+      sortedData: function () {
+        if (!this.sortField) return this.orders;
+        return this.sortOrdersByString(this.sortField, this.sortOrder[this.sortField]);
+     },
+  },
    methods: {
+      sortBy: function(fieldName){
+        this.sortField = fieldName;
+        if(this.sortOrder[fieldName]=="asc"){
+          this.sortOrder[fieldName] = "dsc";
+        }else{
+          this.sortOrder[fieldName] = "asc";
+        }
+        },
+    // to format the date to display format
       formatDate: function(date) {
         if(!date){
           return '';
@@ -56,8 +83,29 @@ export default {
         }catch(er){
           return '';
         }
-        
       }
+      ,
+      sortOrdersByString(fieldName, sortOrder) {
+      
+         let sorted = [...this.orders].sort((a, b) => {
+            let al = a[fieldName].toLowerCase();
+            let bl = b[fieldName].toLowerCase();
+            
+            if (al < bl) {
+               return -1;
+            }
+            if (al > bl) {
+               return 1;
+            }
+            return 0;
+         });
+         if (sortOrder!="asc"){
+          sorted = sorted.reverse();
+         }
+         return sorted;
+      }
+
+
    }
 }
 </script>
@@ -67,7 +115,7 @@ export default {
 .table-container {
   display: grid;
   grid-template-rows: auto;
-  border: 1px solid rgba(222, 220, 220, 0.8);
+
   padding: 10px;
 }
 .tcolumn {
@@ -104,7 +152,25 @@ export default {
   border: 1px solid rgba(180, 180, 180, 0.8);
 
 }
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  opacity: 0.66;
+}
 
+.arrow.asc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #fff;
+}
 
+.arrow.dsc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #fff;
+}
 </style>
 

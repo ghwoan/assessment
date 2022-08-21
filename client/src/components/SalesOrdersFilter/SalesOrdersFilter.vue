@@ -88,19 +88,16 @@
 
   <Teleport to="body">
     <!-- the modal dialog to filter data -->
-    <app-modal :show="showConfirmModal" 
-    isConfirmModal=true size="S"
-    @confirm="onApply"
-    @close="onConfirmClose">
+    <app-modal :show="showConfirmModal" isConfirmModal=true size="S" @confirm="onApply" @close="onConfirmClose">
       <template #header>
         <h3>Confirmation</h3>
       </template>
       <template #body>
         <div>Would you like to apply the changes?</div>
       </template>
-
     </app-modal>
   </Teleport>
+  
 </div>
 </template>
 <script src="./SalesOrdersFilter.js"></script>

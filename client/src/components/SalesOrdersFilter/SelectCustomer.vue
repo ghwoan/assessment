@@ -32,10 +32,10 @@ export default {
       }
    },
    methods:{
+      //fetch customer list from the server
       fetchCustomerList: function() {
          getCustomerList()
             .then(response => {
-
                if (response && response.data) {
                   this.customerList= response.data.data;
                }
@@ -44,8 +44,8 @@ export default {
                console.log(e); 
          })
       },
+      //handle on customer selection change
       onChange: function(event){
-         console.log("conSelectCustomer change");
          this.$emit("valueChange", event.target.value);
       }
    }
