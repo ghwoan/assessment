@@ -60,7 +60,10 @@ export const createOpFilter = (fieldName, prefix, opFilter, fieldType) => {
       } else[
          items = fieldName + " NOT IN " + items
       ]
-      sql = sql  + " AND (" + items + ")";
+      if (prefix) {
+         sql = prefix + " AND ";   
+      }
+      sql = sql  + " (" + items + ")";
    }
    return sql;
 }

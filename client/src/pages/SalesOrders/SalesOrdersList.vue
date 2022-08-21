@@ -1,24 +1,13 @@
 <template>
   <div>
-  
   <h2>Sales Order Listing</h2>
+  <div style="text-align:right;padding-right:20px;">
+    <button  id="show-modal" @click="showModal = true">Filter</button>
+  </div>  
 
   <div>
-  <button  id="show-modal" @click="showModal = true">Show Modal</button>
+    <sales-orders-table :data="orders"></sales-orders-table>
   </div>
-
-    <div v-if="orders.length">
-      <table>
-        <tr v-for="(order,index) in orders" :key="index">
-          <td>{{order.customer_name}}</td>
-          <td>{{order.status}}</td>
-        </tr>
-      </table>
-    </div>
-    <div v-else>
-      No orders
-    </div>
-
   </div>
 
   <Teleport to="body">
@@ -31,8 +20,10 @@
       </div>
       </template>
       <template #body>
-        <h3>filter here</h3>
-        <sales-orders-filter></sales-orders-filter>
+        <sales-orders-filter :initFilters="filters" @close="showModal = false" @apply="onApplyFilter"></sales-orders-filter>
+      </template>
+      <template #footer>
+        <div></div>
       </template>
     </app-modal>
   </Teleport>

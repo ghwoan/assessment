@@ -8,4 +8,4 @@ const defConfig = {
 };
 console.log(defConfig);
 
-export const http = axios.create(defConfig)
+export const http = axios.create(defConfig);

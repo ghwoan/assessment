@@ -28,13 +28,15 @@ export default class Order {
       statusFilter, categoryFilter, countryFilter) {
       let sqlFilter = "";
       let query = "";
-      sqlFilter = createDateRangeFilter("created_date", sqlFilter, startDate, endDate);
-      sqlFilter = createOpFilter("customer_name", sqlFilter, customerFilter);
-      sqlFilter = createOpFilter("status", sqlFilter, statusFilter);
-      sqlFilter = createOpFilter("category_id", sqlFilter, categoryFilter, FieldTypeEnum.NUMBER);
-      sqlFilter = createOpFilter("country", sqlFilter, countryFilter, FieldTypeEnum.STRING);
+      sqlFilter = createDateRangeFilter("s.created_date", sqlFilter, startDate, endDate);
+      console.log(sqlFilter);
+      sqlFilter = createOpFilter("s.customer_name", sqlFilter, customerFilter);
+      sqlFilter = createOpFilter("s.status", sqlFilter, statusFilter);
+      sqlFilter = createOpFilter("s.category_id", sqlFilter, categoryFilter, FieldTypeEnum.NUMBER);
+      sqlFilter = createOpFilter("s.country", sqlFilter, countryFilter, FieldTypeEnum.STRING);
       
-      query = 'SELECT * FROM sales_order';
+      query = 'SELECT s.*, p.name as category FROM sales_order s ';
+      query = query + ' LEFT JOIN product_category p ON s.category_id=p.object_id'
       if (sqlFilter) {
          query = query + " WHERE " + sqlFilter;
       }

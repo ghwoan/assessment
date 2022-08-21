@@ -2,7 +2,7 @@
   <Transition name="modal">
     <div v-if="show" class="modal-backdrop">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container" :class="(size=='S')?'modal-small':'modal-large'">
           <div class="modal-header">
             <slot name="header"></slot>
           </div>
@@ -13,11 +13,16 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              footer
-              <button
-                class="modal-default-button"
-                @click="$emit('close')"
-              >OK</button>
+              <div v-if="isConfirmModal" class="button-container" >
+                <button
+                  class="modal-default-button"
+                  @click="$emit('close')"
+                >NO</button>
+                <button
+                  class="modal-default-button"
+                  @click="$emit('confirm')"
+                >YES</button>
+              </div>
             </slot>
           </div>
         </div>
@@ -29,7 +34,9 @@
 <script>
 export default {
   props: {
-    show: Boolean
+    show: Boolean,
+    isConfirmModal: Boolean,
+    size: String
   }
 }
 </script>
@@ -50,17 +57,25 @@ export default {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
-
 }
 
 .modal-container {
-  width: 80%;
-  margin: 0px auto;
+  margin: 10px auto;
   padding: 10px 20px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+}
+
+.modal-large {
+ width: 80%;
+ 
+}
+
+.modal-small {
+ width: 50%;
+ 
 }
 .modal-header {
   margin: 0 0 0 0;
@@ -75,10 +90,15 @@ export default {
 }
 .modal-footer {
   margin-bottom: 10px;
-}
 
+}
+.button-container{
+  min-height: 20px;
+}
 .modal-default-button {
   float: right;
+  margin-left: 5px;
+  min-width: 50px;
 }
 
 .modal-enter-from {

@@ -1,24 +1,159 @@
 <template>
-<div>
-  <table>
-  <tbody>
-  <tr><td>Created Date</td><td>Display range from</td><td><input v-model="startDate" /></td></tr>
-  <tbody>
-  </table>
-  
-  <button  id="show-modal" @click="showModal = true">Show Modal</button>
+<div style="height:80%">
+  <div class="grid-container">
+    <div class="grid-row border">
+    <div class="grid-item col-1">Created Date</div>
+    <div class="grid-item cell-2">
+          <table>
+        <tbody>
+        <tr><td>Display range from</td>
+        <td><input type="date" v-model="filters.startDate" @change="onDateChange($event,'startDate')"/></td>
+        <td style="padding: 0 10px">to</td>
+        <td><input type="date" v-model="filters.endDate" :min="filters.startDate" @change="onDateChange($event,'endDate')"/></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+    <div class="grid-row border">
+      <div class="grid-item col-1">Customer name</div>
+      <div class="grid-item cell-2">
+        <select-customer :value="customerName" @valueChange="onCustomerChange"></select-customer>
+      </div>
+    </div>
+    <div class="grid-row  border">
+      <div class="grid-item col-1">Status</div>
+      <div class="grid-item cell-2">
+        <div class="grid-chkGroup">
+          <div class="grid-chkGroup-item">
+            <input type="checkbox" value="0" v-model="statusState[0]"  @change="onStatusChange($event)"/>
+            <label for="checkbox">All</label>
+          </div>
+           <div class="grid-chkGroup-item">
+            <input type="checkbox" value="1" v-model="statusState[1]" @change="onStatusChange($event)"/>
+            <label for="checkbox">Open</label>
+          </div>
+           <div class="grid-chkGroup-item">
+            <input type="checkbox" value="2" v-model="statusState[2]"  @change="onStatusChange($event)"/>
+            <label for="checkbox">Processing</label>
+          </div>
+          <div class="grid-chkGroup-item">
+            <input type="checkbox" value="3" v-model="statusState[3]"   @change="onStatusChange($event)"/>
+            <label for="checkbox">Accepted</label>
+          </div>
+          <div class="grid-chkGroup-item">
+            <input type="checkbox" value="4" v-model="statusState[4]"   @change="onStatusChange($event)"/>
+            <label for="checkbox">Rejected</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-row  border">
+      <div class="grid-item col-1">Category</div>
+      <div class="grid-item border">
+        <div class="grid-chkGroup">
+          <div class="grid-chkGroup-item">
+            <input type="checkbox" value="0" v-model="categoryState[0]"  @change="onCategoryChange($event)"/>
+            <label for="checkbox">All</label>
+          </div>
+           <div class="grid-chkGroup-item">
+            <input type="checkbox" value="1" v-model="categoryState[1]" @change="onCategoryChange($event)"/>
+            <label for="checkbox">Electronics</label>
+          </div>
+           <div class="grid-chkGroup-item">
+            <input type="checkbox" value="2" v-model="categoryState[2]"  @change="onCategoryChange($event)"/>
+            <label for="checkbox">Furniture</label>
+          </div>
+          <div class="grid-chkGroup-item">
+            <input type="checkbox" value="3" v-model="categoryState[3]"   @change="onCategoryChange($event)"/>
+            <label for="checkbox">Others</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-item col-1">Country</div>
+      <div class="grid-item cell-2">
+        <select-country :value="countryName" @valueChange="onCountryChange"></select-country></div>
+    </div>
+  </div>
+ <div class="grid-row">
+      <div class="grid-item"><button  id="show-modal" @click="onReset">Reset</button></div>
+      <div class="grid-item right">
+        <button class="buttonToRight" id="show-modal" @click="onClose">Close</button>
+        <button class="buttonToRight" id="show-modal" @click="onApply">Apply</button>
+    </div>
+ </div>
+
 
   <Teleport to="body">
     <!-- the modal dialog to filter data -->
-    <app-modal :show="showModal" @close="showModal = false">
+    <app-modal :show="showConfirmModal" 
+    isConfirmModal=true size="S"
+    @confirm="onApply"
+    @close="onConfirmClose">
       <template #header>
-        <div>Confirmation</div>
+        <h3>Confirmation</h3>
       </template>
       <template #body>
-        <h3>Are you sure?</h3>
+        <div>Would you like to apply the changes?</div>
       </template>
+
     </app-modal>
   </Teleport>
 </div>
 </template>
 <script src="./SalesOrdersFilter.js"></script>
+<style scoped>
+.grid-container {
+  display: grid;
+  grid-template-rows: auto;
+  border: 1px solid rgba(222, 220, 220, 0.8);
+
+  padding: 10px;
+}
+.grid-row {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  padding: 2px;
+}
+.grid-item {
+   padding: 10px;
+}
+.grid-item.right{
+   align-self: right;
+   align-content :right;
+   float: right;
+}
+
+.grid-row.border {
+   border-bottom: 1px solid rgba(222, 220, 220, 0.8);
+}
+.container {
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  -grid-template-rows: 1fr 1fr 1fr;
+}
+
+.col1 {
+  font-size: 12pt;
+  text-align: left;
+  padding: 4rem;
+  width:20%;
+}
+
+.grid-chkGroup{
+   display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  padding: 2px;
+}
+.grid-chkGroup-item {
+  padding:0px;
+}
+
+.buttonToRight{
+  float:right;
+  margin-left: 5px;
+}
+</style>
