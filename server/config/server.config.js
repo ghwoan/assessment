@@ -9,13 +9,10 @@ dotenv.config({
    path: path.resolve(__dirname,`..`, `.env.${process.env.NODE_ENV}`)
 });
 
-const dbConfig = {
+const config = {
+   NODE_ENV : process.env.NODE_ENV || 'development',
    HOST: process.env.HOST || "localhost",
-   USER: process.env.DB_USER ||"devUser",
-   PASSWORD: process.env.DB_PASSWORD || "",
-   DB: process.env.DB_NAME || "vuetest"
+   PORT: process.env.PORT || 3000,
 };
-
-console.log(dbConfig);
- 
-export default dbConfig;
+console.log(config);
+export default config;

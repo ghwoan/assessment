@@ -1,11 +1,11 @@
 
 import express from "express";
-import {get404} from './controllers/error.js';
+//import {get404} from './controllers/error.js';
 import ordersRoutes from './routes/orders.js';
 import productRoutes from './routes/products.js';
+import config from './config/server.config.js';
 
 const app = express();
-const PORT = process.env.PORT |  8080;
 
 console.log(process.env.NODE_ENV);
 
@@ -41,7 +41,7 @@ app.use((error, req, res, next) => {
    res.status(status).json({message: message});
 })
 
-app.listen(PORT, () => {
-   console.log(`Server is running on port ${PORT}.`);
+app.listen(config.PORT, () => {
+   console.log(`Server is running on port ${config.PORT}.`);
  });
  
