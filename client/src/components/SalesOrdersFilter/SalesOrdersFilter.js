@@ -1,6 +1,6 @@
 import AppModal from '../../components/AppModal/AppModal.vue';
-import SelectCustomer from './SelectCustomer.vue';
-import SelectCountry from './SelectCountry.vue';
+import SelectCustomer from '../controls/SelectCustomer.vue';
+import SelectCountry from '../controls/SelectCountry.vue';
 
 const StatusEnum = {
    ALL: 0,
@@ -47,11 +47,12 @@ export default {
 
    },
    methods: {
-      init: function () {
+      init () {
          let def = this.initFilters;
          if (!def) {
             return;
          }
+         
          if (def.startDate) {
             this.filters.startDate = def.startDate;
          }
@@ -72,7 +73,7 @@ export default {
             }
          }
       },
-      initStatusFilter: function (statusFilter) {
+      initStatusFilter (statusFilter) {
          if (statusFilter && statusFilter.list && statusFilter.list.length>0) {
             statusFilter.list.forEach((s) => {
                   try {
@@ -91,7 +92,7 @@ export default {
             this.statusState = a;
          }
       },
-      initCategoryFilter: function (categoryFilter) {
+      initCategoryFilter (categoryFilter) {
          if (categoryFilter && categoryFilter.list && categoryFilter.list.length > 0) {
             //handle IN case
             if (categoryFilter.op == "IN") {
@@ -134,19 +135,23 @@ export default {
          }
       },
       //check if there is any changes on the filters selection
-      hasChanges: function () {
+      hasChanges () {
          let newFilters = this.getNewFilters();
-         if (newFilters && this.filters) {
-            if (JSON.stringify(newFilters) == JSON.stringify(this.initFilters)) {
-               return false;
-            } else {
-               return true;
-            }
+         let oldFilters = {};
+         if (this.initFilters) {
+            oldFilters = { ...this.initFilters};
          }
-         return false; 
+         if (!newFilters) {
+            newFilters = {};
+         }
+         if (JSON.stringify(newFilters) == JSON.stringify(oldFilters)) {
+            return false;
+         } else {
+            return true;
+         }
       },
       //handle on Close button clicks
-      onClose: function () {
+      onClose () {
          if (this.hasChanges()) {
             this.showConfirmModal = true;
          } else {
@@ -154,12 +159,12 @@ export default {
          }
       },
       //handle on Confirm Close button clicks
-      onConfirmClose: function () {
+      onConfirmClose () {
          this.showConfirmModal = false;
          this.$emit("close");
       },
       //handle on Apply button clicks
-      onApply: function () {
+      onApply () {
          let filters = this.getNewFilters();
          if (filters) {
             this.$emit("apply", filters);   
@@ -168,10 +173,14 @@ export default {
          }
       },
       //to get the new filters
-      getNewFilters: function () {
-         let filters = {...this.filters};
-
-        
+      getNewFilters () {
+         let filters = {};
+         if (this.filters.startDate) {
+            filters["startDate"] = this.filters.startDate;
+         }
+         if (this.filters.endDate) {
+            filters["endDate"] = this.filters.endDate;
+         }
          //update customer filters
          if (this.customerName && this.customerName!="-") {
             filters["customerFilter"] = {list:[this.customerName], op: "IN"};
@@ -194,8 +203,8 @@ export default {
          return filters;
       },
       //create status filters
-      getStatusFilters: function () {
-         console.log(this.statusState);
+      getStatusFilters () {
+      //   console.log(this.statusState);
          //if include all, no filter required
          if (this.statusState[0]) {
             return undefined;
@@ -215,7 +224,6 @@ export default {
                list.push("Rejected");
             }
          }
-         console.log(list);
          if (list.length > 0) {
            return { list: list , op: "IN" };
          } else {
@@ -224,7 +232,7 @@ export default {
           
       },
       //create the category filters
-      getCategoryFilters: function () {
+      getCategoryFilters () {
          let filter = { list: [], op: "IN" };
          //if include all, no filter required
          if (this.categoryState[0]) {
@@ -256,40 +264,41 @@ export default {
       },
       //get the category Id by enum
       //temporary hardcode
-      getCategoryId: function (categoryEnum) {
+      getCategoryId (categoryEnum) {
          if (categoryEnum == CategoryEnum.ELECTRONICS) {
             return 1;
          } else if (categoryEnum == CategoryEnum.FURNITURE) {
             return 2;
          }
       },
-      onReset: function () {
+      //handle on Reset clicks
+      onReset () {
          this.filters.startDate = "";
          this.filters.endDate = "";
          this.customerName = "-";
          this.countryName = "-";
          this.statusState = [true, true, true, true, true];
          this.categoryState = [true, true, true, true];
-
       },
-      onDateChange: function (event, type) {
+      //to handle date filter changes
+      onDateChange (event, type) {
          this.filters[type] = event.target.value;
-         console.log(this.filters);
          if (this.filters.endDate && this.filters.startDate) {
             if (this.filters.endDate < this.filters.startDate) {
                this.filters.endDate = '';  
             }
          }
       },
-      onCustomerChange: function (value) {
-         console.log(value);
+      //to handle customer filter changes
+      onCustomerChange (value) {
          this.customerName = value;
       },
-      onCountryChange: function (value) {
-         console.log(value);
+      //to handle country filter changes
+      onCountryChange (value) {
          this.countryName = value;
       },
-      onStatusChange: function (event) {
+      //to handle status filter changes
+      onStatusChange (event) {
          console.log(StatusEnum.ACCEPTED);
          if (event.target.value == StatusEnum.ALL) {
             let a = this.statusState.map(() => event.target.checked);
@@ -298,27 +307,23 @@ export default {
          if (event.target.value < 5) {
             this.statusState[event.target.value] = event.target.checked;
             if (event.target.value != StatusEnum.ALL) {
+               //to uncheck all if either one of it is false
                if (this.statusState.find(c => c===false)!=undefined) {
                   this.statusState[0] = false;
                }
             }
-            /*if (event.target.checked == false && this.statusState[0] == true) {
-               this.statusState[0] = false;
-            }*/
-            console.log(this.statusState);
-         
          }
-         
       },
-      onCategoryChange: function (event) {
-       
+      //to handle category filter changes
+      onCategoryChange (event) {
          if (event.target.value == CategoryEnum.ALL) {
             let a = this.categoryState.map(() => event.target.checked);
             this.categoryState = a;
          }
          if (event.target.value < 4) {
             this.categoryState[event.target.value] = event.target.checked;
-            if (event.target.value != CategoryEnum.ALL) {
+            if (event.target.value != CategoryEnum.ALL) {          
+               //to uncheck all if either one of it is false
                if (this.categoryState.find(c => c===false)!=undefined) {
                   this.categoryState[0] = false;
                }

@@ -2,8 +2,8 @@
 <div class="table-container">
   <div class="tcolumn thead">
         <div class="th">Order No</div>
-        <div class="th" @click="sortBy('customer_name')" >Customer Name 
-           <span class="arrow" :class="sortOrder.customer_name" ></span>
+        <div class="th" @click="sortBy('customerName')" >Customer Name 
+           <span class="arrow" :class="sortOrder.customerName" ></span>
         </div>
         <div class="th" @click="sortBy('status')">Status 
            <span class="arrow" :class="sortOrder.status" ></span>
@@ -14,19 +14,19 @@
         <div class="th" @click="sortBy('country')">Country 
            <span class="arrow" :class="sortOrder.country" ></span>
         </div>
-        <div class="th" @click="sortBy('created_date')">Created Date 
-           <span class="arrow" :class="sortOrder.created_date" ></span>
+        <div class="th" @click="sortBy('createdDate')">Created Date 
+           <span class="arrow" :class="sortOrder.createdDate" ></span>
         </div>
   </div>
 
     <div v-if="orders && orders.length">    
       <div v-for="(order,index) in sortedData" :key="index" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
         <div  class="tcell left">{{index +1}}</div>
-        <div class="tcell left">{{order.customer_name}}</div>
+        <div class="tcell left">{{order.customerName}}</div>
         <div class="tcell left">{{order.status}}</div>
         <div class="tcell left">{{order.category}}</div>
         <div class="tcell left">{{order.country}}</div>
-        <div class="tcell left">{{formatDate(order.created_date)}}</div>
+        <div class="tcell left">{{formatDate(order.createdDate)}}</div>
       </div>
     </div>
     <div v-else>
@@ -47,7 +47,7 @@ export default {
       return {
          orders: [],
          sortField: '',
-         sortOrder: {customer_name:"asc", status:"asc", category: "asc", country:"asc", created_date: "asc"} 
+         sortOrder: {customerName:"asc", status:"asc", category: "asc", country:"asc", createdDate: "asc"} 
       };
    },
   watch: {

@@ -1,4 +1,3 @@
-//const ProductCategory = require('../models/productCategory');
 import ProductCategory from '../models/productCategory.js';
 
 export const getProductCategories = (req, res, next) => {

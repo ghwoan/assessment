@@ -1,13 +1,11 @@
 
 import express from "express";
-//import {get404} from './controllers/error.js';
-import ordersRoutes from './routes/orders.js';
+import defRoutes from './routes/index.js';
+import ordersRoutes from './routes/v1/orders.js';
 import productRoutes from './routes/products.js';
 import config from './config/server.config.js';
 
 const app = express();
-
-console.log(process.env.NODE_ENV);
 
 // parse requests: content-type - application/json
 app.use(express.json());
@@ -23,19 +21,12 @@ app.use((req,res, next)=>{
    next();
 })
 
-app.get("/", (req, res) => {
-   res.redirect("/orders");
-  // res.json({ message: "Welcome to Gan application." });
-});
 
-app.use('/orders', ordersRoutes);
+app.use(defRoutes);
+app.use('/api/v1/orders', ordersRoutes);
 app.use('/products', productRoutes);
-//app.use(shopRoutes);
 
-//app.use(get404);
 app.use((error, req, res, next) => {
-   console.log("error found")
- //  console.log(error);
    const status = error.statusCode;
    const message = error
    res.status(status).json({message: message});

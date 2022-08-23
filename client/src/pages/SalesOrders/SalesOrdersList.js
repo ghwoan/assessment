@@ -2,7 +2,7 @@
 import { getSalesOrders } from '../../data/salesorders.js';
 import AppModal from '../../components/AppModal/AppModal.vue';
 import SalesOrdersFilter from '../../components/SalesOrdersFilter/SalesOrdersFilter.vue';
-import SalesOrdersTable from './SalesOrdersTable.vue';
+import SalesOrdersTable from '../../components/SalesOrdersTable/SalesOrdersTable.vue';
 
 export default {
    components: {
@@ -30,7 +30,6 @@ export default {
    methods: {
       //to fetch the server sales orders data
       fetchData: function () {
-         console.log("fetchData");
          getSalesOrders(this.filters).then(response => {
             this.orders = response.data.data;
             this.setNextFetch();

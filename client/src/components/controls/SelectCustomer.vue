@@ -1,8 +1,8 @@
 <template>
 <select v-model="selectedCustomer" @change="onChange">
    <option value="-">All</option>
-   <option v-for="customer in customerList" :key="customer.customer_name" :value="customer.customer_name">
-   {{customer.customer_name}}</option>
+   <option v-for="customer in customerList" :key="customer.customerName" :value="customer.customerName">
+   {{customer.customerName}}</option>
 </select>
 </template>
 
@@ -26,14 +26,13 @@ export default {
 
    },
    watch: {
-      value: function(newVal){
-         console.log(newVal);
+      value(newVal){
          this.selectedCustomer = newVal;
       }
    },
    methods:{
       //fetch customer list from the server
-      fetchCustomerList: function() {
+      fetchCustomerList() {
          getCustomerList()
             .then(response => {
                if (response && response.data) {
@@ -45,7 +44,7 @@ export default {
          })
       },
       //handle on customer selection change
-      onChange: function(event){
+      onChange(event){
          this.$emit("valueChange", event.target.value);
       }
    }

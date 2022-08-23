@@ -6,7 +6,7 @@ import { http } from '../utils/http.js';
 //get country list from server
 export function getCountryList() {
    try {
-      return http.get(`/orders/countries`);
+      return http.get(`/api/v1/orders/countries`);
    } catch (er) {
       console.log(er);
    }
@@ -15,7 +15,7 @@ export function getCountryList() {
 //get customer list
 export function getCustomerList() {
    try {
-      return http.get(`/orders/customers`);
+      return http.get(`/api/v1/orders/customers`);
    } catch (er) {
       console.log(er);
    }
@@ -28,7 +28,7 @@ export async function getSalesOrders(filters) {
       token: ""
    };
    try {
-      return http.post(`/orders/filter`, param);
+      return http.post(`/api/v1/orders/filter`, param);
    } catch (er) {
       console.log(er);
    }

@@ -12,7 +12,7 @@ dotenv.config({
 const dbConfig = {
    HOST: process.env.HOST || "localhost",
    USER: process.env.DB_USER ||"devUser",
-   PASSWORD: process.env.DB_PASSWORD || "",
+   PASSWORD: process.env.DB_PASSWORD || "7est@Loca1",
    DB: process.env.DB_NAME || "vuetest"
 };
 

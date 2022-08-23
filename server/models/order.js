@@ -29,7 +29,7 @@ export default class Order {
       let sqlFilter = "";
       let query = "";
       sqlFilter = createDateRangeFilter("s.created_date", sqlFilter, startDate, endDate);
-      console.log(sqlFilter);
+      
       sqlFilter = createOpFilter("s.customer_name", sqlFilter, customerFilter);
       sqlFilter = createOpFilter("s.status", sqlFilter, statusFilter);
       sqlFilter = createOpFilter("s.category_id", sqlFilter, categoryFilter, FieldTypeEnum.NUMBER);
@@ -40,7 +40,7 @@ export default class Order {
       if (sqlFilter) {
          query = query + " WHERE " + sqlFilter;
       }
-      console.log(query);
+     // console.log(query);
      return db.execute(query);
    }
 

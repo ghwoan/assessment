@@ -27,16 +27,14 @@ export default {
    },
    watch: {
       value: function(newVal){
-         console.log(newVal);
          this.selected = newVal;
       }
    },
    methods:{
       //fetch country list from the server
-      fetchCountryList: function() {
+      fetchCountryList() {
          getCountryList()
             .then(response => {
-
                if (response && response.data) {
                   this.countryList= response.data.data;
                }
@@ -46,7 +44,7 @@ export default {
          })
       },
       //handle on country selection change
-      onChange: function(event){
+      onChange(event){
          this.$emit("valueChange", event.target.value);
       }
    }

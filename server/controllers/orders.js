@@ -1,143 +1,104 @@
-import Order from '../models/order.js';
-import OrdersFilterRequest from '../models/ordersFilterRequest.js';
+import ordersService from "../services/ordersService.js";
+//import OrdersFilterRequest from '../models/ordersFilterRequest.js';
+import config from "../config/server.config.js";
 
-export const getAllSalesOrders = (req, res, next) => {
-   const currentPage = req.query.page || 1;
-	const perPage = 2;	
+//function to validate the Api Key
+const validateApiKey = (req, res) => {
+   if (req.header("Authorization")==config.API_KEY) {
+      return true;
+   }
+   
+   res.status(401).json({
+      error: {
+         message: "Unauthorize access!"
+      }
+   });
+   return false;
+}
 
-   console.log("getAllSalesOrders");
-   try {
-      Order.fetchAll()
-         .then(([rows, fieldData]) => {
-            let totalItems = 0;
-            if (rows) {
-               totalItems = rows.length;
-           }
-            res.status(200).json({ 
-               status:200,
-               totalItems: totalItems,
-               data: rows
-            });
-         })
-         .catch(err => console.log(err));
-   } catch (err) {
-      console.log("error here?");
-		if (!err.statusCode) {
-			err.statusCode = 500;
-		}
-		next(err);
-	}
-};
-
-
-export const getSalesOrders = (req, res, next) => {
+//response the sales order list request with filter
+export const getSalesOrders =  (req, res, next) => {
    const currentPage = req.query.page || 1;
    const perPage = 10;
-   console.log("getSalesOrders");
+   console.log("getSalesOrders", req.header("Authorization"));
    console.log("currentPage=" + currentPage);
 
+   if (!validateApiKey(req, res)) {
+      next();
+      return; 
+   } 
+
    if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!"
+      res.status(400).json({
+         error: {
+            message: "Content can not be empty!"
+         }
       });
     }
   // let filter = new OrdersFilterRequest(req.body);
-  let filter =req.body;
+   let filter = req.body;
    try {
-      Order.fetchByCondition(filter.startDate, filter.endDate,
+      ordersService.getSalesOrders(filter.startDate, filter.endDate,
          filter.customerFilter, filter.statusFilter,
-         filter.categoryFilter, filter.countryFilter)
-         .then(([rows, fieldData]) => {
-            let totalItems = 0;
-            if (rows) {
-               totalItems = rows.length;
+         filter.categoryFilter, filter.countryFilter).then(
+            (resp)=>{
+               if (resp) {
+                  res.status(200).json(resp);
+               } else {
+                  next({ statusCode: 500 });
+               }
             }
-            
-            res.status(200).json({ 
-               status:200,
-               totalItems: totalItems,
-               data: rows
-            });
-         })
-         .catch(err => console.log(err));
+         );
    } catch (err) {
-      console.log("error here?");
-		if (!err.statusCode) {
-			err.statusCode = 500;
-		}
-		next(err);
-	}
+      if (!err.statusCode) {
+         err.statusCode = 500;
+         next(err);
+      }
+   }
 };
 
+//response the customer list request
 export const getCustomerList = (req, res, next) => {
    const currentPage = req.query.page || 1;
    const perPage = 10;
-   console.log("getCustomerList");
-   console.log(req.query);
-   console.log(req.body);
-   if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-    }
-   console.log(req.body);
-   
    try {
-      Order.fetchCustomerList()
-         .then(([rows, fieldData]) => {
-            let totalItems = 0;
-            if (rows) {
-               totalItems = rows.length;
-           }
-            res.status(200).json({ 
-               status:200,
-               totalItems: totalItems,
-               data: rows
-            });
-         })
-         .catch(err => console.log(err));
+      ordersService.getCustomerList().then(
+         (resp)=>{
+            if (resp) {
+               res.status(200).json(resp);
+            } else {
+               next({ statusCode: 500 });
+            }
+         }
+      );
    } catch (err) {
-      console.log("error here?");
-		if (!err.statusCode) {
-			err.statusCode = 500;
-		}
-		next(err);
-	}
+      console.log(err);
+      if (!err.statusCode) {
+         err.statusCode = 500;
+         next(err);
+      }
+   }
 };
 
+//response the country list request
+   export const getCountryList =  (req, res, next) => {
+      try {
+         ordersService.getCountryList().then(
+            (resp)=>{
+               if (resp) {
+                  res.status(200).json(resp);
+               } else {
+                  next({ statusCode: 500 });
+               }
+            }
+         );
+      } catch (err) {
+         console.log(err);
+         if (!err.statusCode) {
+            err.statusCode = 500;
+            next(err);
+         }
+      }
+   }
 
-export const getCountryList = (req, res, next) => {
-   const currentPage = req.query.page || 1;
-   const perPage = 10;
-   console.log("getCustomerList");
-   console.log(req.query);
-   console.log(req.body);
-   if (!req.body) {
-      res.status(400).send({
-        message: "Content can not be empty!"
-      });
-    }
-   console.log(req.body);
    
-   try {
-      Order.fetchCountryList()
-         .then(([rows, fieldData]) => {
-            let totalItems = 0;
-            if (rows) {
-               totalItems = rows.length;
-           }
-            res.status(200).json({ 
-               status:200,
-               totalItems: totalItems,
-               data: rows
-            });
-         })
-         .catch(err => console.log(err));
-   } catch (err) {
-      console.log("error here?");
-		if (!err.statusCode) {
-			err.statusCode = 500;
-		}
-		next(err);
-	}
-};
