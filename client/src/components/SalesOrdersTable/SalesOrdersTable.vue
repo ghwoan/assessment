@@ -1,7 +1,9 @@
 <template>
 <div class="table-container">
   <div class="tcolumn thead">
-        <div class="th">Order No</div>
+        <div class="th"  @click="sortBy('orderId')">Order No
+          <span class="arrow" :class="sortOrder.orderId" ></span>
+        </div>
         <div class="th" @click="sortBy('customerName')" >Customer Name 
            <span class="arrow" :class="sortOrder.customerName" ></span>
         </div>
@@ -20,8 +22,9 @@
   </div>
 
     <div v-if="orders && orders.length">    
-      <div v-for="(order,index) in sortedData" :key="index" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
-        <div  class="tcell left">{{index +1}}</div>
+      <div v-for="(order,index) in sortedData" :key="order.rderId" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
+        <!--div  class="tcell left">{{index +1}}</div-->
+        <div  class="tcell left">{{order.orderId}}</div>
         <div class="tcell left">{{order.customerName}}</div>
         <div class="tcell left">{{order.status}}</div>
         <div class="tcell left">{{order.category}}</div>
@@ -47,7 +50,7 @@ export default {
       return {
          orders: [],
          sortField: '',
-         sortOrder: {customerName:"asc", status:"asc", category: "asc", country:"asc", createdDate: "asc"} 
+         sortOrder: {orderId: "asc", customerName:"asc", status:"asc", category: "asc", country:"asc", createdDate: "asc"} 
       };
    },
   watch: {
