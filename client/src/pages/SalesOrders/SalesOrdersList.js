@@ -48,9 +48,9 @@ export default {
       },
       //get the filter history
       getHistoryFilters() {
-         if (!sessionStorage) return;
+         if (!localStorage) return;
          try {
-            let filters = sessionStorage.getItem("sales-order-filter");
+            let filters = localStorage.getItem("sales-order-filter");
             if (filters) {
                this.filters = JSON.parse(filters);
             }  
@@ -60,8 +60,8 @@ export default {
       },
       //save the filters to session
       saveFilters() {
-         if (sessionStorage && this.filters) {
-            sessionStorage.setItem("sales-order-filter",JSON.stringify(this.filters));
+         if (localStorage && this.filters) {
+            localStorage.setItem("sales-order-filter",JSON.stringify(this.filters));
          }
       },
       //handle filter changes

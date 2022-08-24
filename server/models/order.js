@@ -14,7 +14,7 @@ export default class Order {
 
    save() {
       return db.execute(
-        'INSERT INTO sales_order (customer_name, status, category_id, country, created_date,updated_date) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO sales_order (customer_name, status, category_id, country, created_date,updated_date) VALUES (?, ?, ?, ?, ?, ?)',
         [this.customerName, this.status, this.categoryId, this.country, this.createdDate, this.updatedDate]
       );
    }
@@ -52,7 +52,9 @@ export default class Order {
       return db.execute('SELECT DISTINCT country FROM sales_order');
    }
 
-  static deleteById(id) {}
+   static deleteById(id) {
+      return db.execute('DELETE FROM sales_order WHERE sales_order.object_id = ?', [id]);
+  }
 
 
   static findById(id) {

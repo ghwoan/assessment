@@ -89,8 +89,74 @@ const getSalesOrders = (startDate, endDate,
 	}
 };
 
+const createOrder = (orderData) => {
+   try {
+      return new Promise((resolve, reject) => {
+         const order = new Order(null, orderData.customerName, orderData.status,
+            orderData.categoryId, orderData.country, new Date(), null);
+         order.save().then((result) => {
+            if (result.affectedRows) {
+               return resolve({
+                  status: 0,
+                  orderId: result.insertId
+               });   
+            } else {
+               return resolve({
+                  status: -1,
+                  error: "Fail to create order"
+               });  
+            }
+            
+         }).catch(err => {
+            console.log("not able to add");
+            return reject(err);
+         });
+     });     
+   } catch (err) {
+      throw err;
+	}
+}
+
+
+ 
+const deleteOrder = (id) => {
+   try {
+      return new Promise((resolve, reject) => {
+         if (!id) {
+            return {
+               status: -1,
+               error: {
+               message: "Invalid Id!"
+            }};
+         }
+
+         Order.deleteById(id).then((result) => {
+            console.log(result);
+            if (result.affectedRows) {
+               return resolve({
+                  status: 0
+               });   
+            } else {
+               return resolve({error: {
+                  message: "Fail to delete order!"
+               }});
+            }
+            
+         }).catch(err => {
+            console.log("not able to add");
+            return reject(err);
+         });
+     });     
+   } catch (err) {
+      throw err;
+	}
+}
+ 
+
 export default {
    getCountryList,
    getCustomerList,
-   getSalesOrders
+   getSalesOrders,
+   createOrder,
+   deleteOrder
  };

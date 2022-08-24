@@ -6,14 +6,7 @@ const router = createRouter({
    history: createWebHistory(),
    routes: [
      { path: '/', redirect: '/orders' },
-    /* {
-       path: '/coaches/:id',
-       component: CoachDetail,
-       props: true,
-       children: [
-         { path: 'contact', component: ContactCoach } // /coaches/c1/contact
-       ]
-     },*/
+     { path: '/sales-orders', component: SalesOrderList },
      { path: '/orders', component: SalesOrderList },
      { path: '/:notFound(.*)', component: NotFound }
    ]
