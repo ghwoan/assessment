@@ -157,8 +157,10 @@ export const deleteSalesOrder = (req, res, next) => {
 }
 
 export const getSalesOrder = (req, res, next) => {
+   res.status(200).json({"message": "under construction"});
 }
 
 export const updateSalesOrder = (req, res, next) => {
+   res.status(200).json({"message": "under construction"});
 }
 
