@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectCountry.vue renders SelectCountry with countryList 1`] = `
+<select>
+  <option value="-">All</option>
+  <option value="Indonesia">Indonesia</option>
+  <option value="China">China</option>
+</select>
+`;
+
+exports[`SelectCountry.vue renders SelectCountry with countryList2 1`] = `
+<select>
+  <option value="-">All</option>
+  <option value="Malaysia">Malaysia</option>
+  <option value="Singapore">Singapore</option>
+</select>
+`;

@@ -102,55 +102,6 @@
 </template>
 <script src="./SalesOrdersFilter.js"></script>
 <style scoped>
-.grid-container {
-  display: grid;
-  grid-template-rows: auto;
-  border: 1px solid rgba(222, 220, 220, 0.8);
-
-  padding: 10px;
-}
-.grid-row {
-  display: grid;
-  grid-template-columns: 20% 80%;
-  padding: 2px;
-}
-.grid-item {
-   padding: 10px;
-}
-.grid-item.right{
-   align-self: right;
-   align-content :right;
-   float: right;
-}
-
-.grid-row.border {
-   border-bottom: 1px solid rgba(222, 220, 220, 0.8);
-}
-.container {
-  margin: 1rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  -grid-template-rows: 1fr 1fr 1fr;
-}
-
-.col1 {
-  font-size: 12pt;
-  text-align: left;
-  padding: 4rem;
-  width:20%;
-}
-
-.grid-chkGroup{
-   display: grid;
-  grid-template-columns: 20% 20% 20% 20% 20%;
-  padding: 2px;
-}
-.grid-chkGroup-item {
-  padding:0px;
-}
-
-.buttonToRight{
-  float:right;
-  margin-left: 5px;
-}
+@import "./SalesOrdersStyle.css";
 </style>
+

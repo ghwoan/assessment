@@ -91,7 +91,10 @@ export const getCountryList = (req, res, next) => {
                next({ statusCode: 500 });
             }
          }
-      );
+      ).catch(e => {
+         console.log(e);
+         res.status(500).json({error: "fail to get Country list"});
+      });
    } catch (err) {
       console.log(err);
       if (!err.statusCode) {

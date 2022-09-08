@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SalesOrdersTable.vue method sortOrdersByString 1`] = `"[{\\"orderId\\":\\"2\\",\\"customerName\\":\\"China\\"},{\\"orderId\\":\\"1\\",\\"customerName\\":\\"Indonesia\\"}]"`;
+
+exports[`SalesOrdersTable.vue method sortOrdersByString 2`] = `"[{\\"orderId\\":\\"1\\",\\"customerName\\":\\"Indonesia\\"},{\\"orderId\\":\\"2\\",\\"customerName\\":\\"China\\"}]"`;
+
+exports[`SalesOrdersTable.vue method sortOrdersByString 3`] = `"[{\\"orderId\\":\\"1\\",\\"customerName\\":\\"Indonesia\\"},{\\"orderId\\":\\"2\\",\\"customerName\\":\\"China\\"}]"`;
+
+exports[`SalesOrdersTable.vue method sortOrdersByString 4`] = `"[{\\"orderId\\":\\"1\\",\\"customerName\\":\\"Indonesia\\"},{\\"orderId\\":\\"2\\",\\"customerName\\":\\"China\\"}]"`;
+
+exports[`SalesOrdersTable.vue method sortOrdersByString 5`] = `"[{\\"orderId\\":\\"1\\",\\"customerName\\":\\"Indonesia\\"},{\\"orderId\\":\\"2\\",\\"customerName\\":\\"China\\"}]"`;
+
+exports[`SalesOrdersTable.vue method sortOrdersByString 6`] = `"[{\\"orderId\\":\\"2\\",\\"customerName\\":\\"China\\"},{\\"orderId\\":\\"1\\",\\"customerName\\":\\"Indonesia\\"}]"`;
+
+exports[`SalesOrdersTable.vue renders data 1`] = `
+<div class="table-container">
+  <div class="tcolumn thead">
+    <div class="th">Order No <span class="arrow asc"></span></div>
+    <div class="th">Customer Name <span class="arrow asc"></span></div>
+    <div class="th">Status <span class="arrow asc"></span></div>
+    <div class="th">Category <span class="arrow asc"></span></div>
+    <div class="th">Country <span class="arrow asc"></span></div>
+    <div class="th">Created Date <span class="arrow asc"></span></div>
+  </div>
+  <div>
+    <div class="tcolumn trow even">
+      <!--div  class="tcell left">{{index +1}}</div-->
+      <div class="tcell left">1</div>
+      <div class="tcell left">B</div>
+      <div class="tcell left"></div>
+      <div class="tcell left"></div>
+      <div class="tcell left">Indonesia</div>
+      <div class="tcell left"></div>
+    </div>
+    <div class="tcolumn trow odd">
+      <!--div  class="tcell left">{{index +1}}</div-->
+      <div class="tcell left">2</div>
+      <div class="tcell left">A</div>
+      <div class="tcell left"></div>
+      <div class="tcell left"></div>
+      <div class="tcell left">China</div>
+      <div class="tcell left"></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SalesOrdersTable.vue renders empty 1`] = `
+<div class="table-container">
+  <div class="tcolumn thead">
+    <div class="th">Order No <span class="arrow asc"></span></div>
+    <div class="th">Customer Name <span class="arrow asc"></span></div>
+    <div class="th">Status <span class="arrow asc"></span></div>
+    <div class="th">Category <span class="arrow asc"></span></div>
+    <div class="th">Country <span class="arrow asc"></span></div>
+    <div class="th">Created Date <span class="arrow asc"></span></div>
+  </div>
+  <div>
+    <div class="tcell"> No orders </div>
+  </div>
+</div>
+`;

@@ -22,7 +22,7 @@ export default {
       this.getHistoryFilters();
       this.fetchData();
    },
-   destroy() {
+   destroyed() {
       if(this.timer){
          clearTimeout(this.timer);
       }

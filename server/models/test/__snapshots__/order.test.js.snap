@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SqlUtil Tests fetchByCondition 1`] = `
+[
+  {
+    "category": "Electronics",
+    "category_id": 1,
+    "country": "United Kingdom",
+    "created_date": 2022-01-22T16:00:00.000Z,
+    "customer_name": "Kivell",
+    "object_id": 1,
+    "status": "Accepted",
+    "updated_date": null,
+  },
+  {
+    "category": "Furniture",
+    "category_id": 2,
+    "country": "Russia",
+    "created_date": 2022-01-19T16:00:00.000Z,
+    "customer_name": "Jardine",
+    "object_id": 2,
+    "status": "Accepted",
+    "updated_date": null,
+  },
+  {
+    "category": "Furniture",
+    "category_id": 2,
+    "country": "Russia",
+    "created_date": 2022-02-08T16:00:00.000Z,
+    "customer_name": "Jardine",
+    "object_id": 3,
+    "status": "Processing",
+    "updated_date": null,
+  },
+]
+`;
+
+exports[`SqlUtil Tests fetchByCondition 2`] = `
+[
+  {
+    "category": "Furniture",
+    "category_id": 2,
+    "country": "Russia",
+    "created_date": 2022-02-08T16:00:00.000Z,
+    "customer_name": "Jardine",
+    "object_id": 3,
+    "status": "Processing",
+    "updated_date": null,
+  },
+]
+`;
+
+exports[`SqlUtil Tests fetchByCondition 3`] = `
+[
+  {
+    "category": "Electronics",
+    "category_id": 1,
+    "country": "United Kingdom",
+    "created_date": 2022-01-22T16:00:00.000Z,
+    "customer_name": "Kivell",
+    "object_id": 1,
+    "status": "Accepted",
+    "updated_date": null,
+  },
+  {
+    "category": "Furniture",
+    "category_id": 2,
+    "country": "Russia",
+    "created_date": 2022-01-19T16:00:00.000Z,
+    "customer_name": "Jardine",
+    "object_id": 2,
+    "status": "Accepted",
+    "updated_date": null,
+  },
+]
+`;
+
+exports[`SqlUtil Tests fetchByCondition 4`] = `
+[
+  {
+    "category": "Furniture",
+    "category_id": 2,
+    "country": "Russia",
+    "created_date": 2022-01-19T16:00:00.000Z,
+    "customer_name": "Jardine",
+    "object_id": 2,
+    "status": "Accepted",
+    "updated_date": null,
+  },
+]
+`;
+
+exports[`SqlUtil Tests fetchByCondition 5`] = `
+[
+  {
+    "category": "Electronics",
+    "category_id": 1,
+    "country": "United Kingdom",
+    "created_date": 2022-01-22T16:00:00.000Z,
+    "customer_name": "Kivell",
+    "object_id": 1,
+    "status": "Accepted",
+    "updated_date": null,
+  },
+]
+`;
+
+exports[`SqlUtil Tests fetchCountryList 1`] = `
+[
+  {
+    "country": "United Kingdom",
+  },
+  {
+    "country": "Russia",
+  },
+]
+`;
+
+exports[`SqlUtil Tests fetchCustomerList 1`] = `
+[
+  {
+    "customer_name": "Kivell",
+  },
+  {
+    "customer_name": "Jardine",
+  },
+]
+`;

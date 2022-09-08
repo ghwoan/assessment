@@ -22,7 +22,7 @@
   </div>
 
     <div v-if="orders && orders.length">    
-      <div v-for="(order,index) in sortedData" :key="order.rderId" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
+      <div v-for="(order,index) in sortedData" :key="order.orderId" class="tcolumn trow"  :class="(index%2==0)? 'even' : 'odd'">
         <!--div  class="tcell left">{{index +1}}</div-->
         <div  class="tcell left">{{order.orderId}}</div>
         <div class="tcell left">{{order.customerName}}</div>
@@ -91,8 +91,17 @@ export default {
       sortOrdersByString(fieldName, sortOrder) {
       
          let sorted = [...this.orders].sort((a, b) => {
-            let al = a[fieldName].toLowerCase();
-            let bl = b[fieldName].toLowerCase();
+          let al = undefined;
+            let bl = undefined;
+            
+          if(typeof(a[fieldName])=="number"){
+            al = a[fieldName];
+            bl = b[fieldName];
+          }else{
+            al = a[fieldName].toLowerCase();
+            bl = b[fieldName].toLowerCase();
+            
+          }
             
             if (al < bl) {
                return -1;
